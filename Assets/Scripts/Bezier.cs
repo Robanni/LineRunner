@@ -14,7 +14,6 @@ public class Bezier
             result += BinomialCoefficient(points.Count-1, i) * Mathf.Pow((1 - t), (points.Count -1 - i))
                                         * Mathf.Pow(t, i) * points[i].position;
         }
-        //Debug.Log(result);
         
         return result;
     }
@@ -53,11 +52,9 @@ public class Bezier
             Debug.Log($"Error: {e.Message}");
         }
 
-        if (k == 0) {Debug.Log("k == 0"); return 1; }
+        if (k == 0)  return 1;
 
         int resoult = Factorial(n) / (Factorial(k) * Factorial(n - k));
-
-        Debug.Log(resoult);
 
         return resoult;
     }

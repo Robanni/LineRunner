@@ -2,24 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
-public class BezierTest : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private List<Transform> _pointsList;
 
-    private Bezier _bezier = new Bezier();
+    [Range(0, 1), SerializeField] private float speed = 0.05f;
 
     [Range(0,1),SerializeField] private float t;
 
-    private void Start()
+    private Bezier _bezier = new Bezier();
+
+    private void FixedUpdate()
     {
-        
-    }
-    private void Update()
-    {
-        
-        transform.position = _bezier.GetPointOnBezierCurve(_pointsList, t);
-        transform.rotation = Quaternion.LookRotation ( _bezier.GetPointOnDerivativeBezierCurve(_pointsList, t));
+
+        MovePlayer();
     }
     private void OnDrawGizmos()
     {
@@ -34,5 +30,13 @@ public class BezierTest : MonoBehaviour
             preveousVector = point;
         }
 
+    }
+
+    private void MovePlayer()
+    {
+        if(Input.touchCount != 0 && t <= 1) t += speed;
+
+        transform.position = _bezier.GetPointOnBezierCurve(_pointsList, t);
+        transform.rotation = Quaternion.LookRotation(_bezier.GetPointOnDerivativeBezierCurve(_pointsList, t));
     }
 }
